@@ -1,9 +1,8 @@
 import { Link, Form, redirect, useNavigate } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { FormRow, Logo } from "../components";
+import { FormRow, Logo, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
-import SubmitBtn from "../components/SubmitBtn";
 
 export const action =
   (queryClient) =>
@@ -11,12 +10,12 @@ export const action =
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     try {
-      await axios.post("/api/v1/auth/login", data);
+      await customFetch.post("/auth/login", data);
       queryClient.invalidateQueries();
       toast.success("Login successful");
       return redirect("/dashboard");
     } catch (error) {
-      toast.error(error.response.data.msg);
+      toast.error(error?.response?.data?.msg);
       return error;
     }
   };
@@ -31,7 +30,7 @@ const Login = () => {
     };
     try {
       await customFetch.post("/auth/login", data);
-      toast.success("Enjoy your trial");
+      toast.success("Take a test drive");
       navigate("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
