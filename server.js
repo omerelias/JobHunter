@@ -15,7 +15,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 import cloudinary from "cloudinary";
-
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -27,6 +28,9 @@ if(process.env.NODE_ENV==='development')
 {
 app.use(morgan('dev'));
 }
+
+app.use(helmet());
+app.use(mongoSanitize());
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
