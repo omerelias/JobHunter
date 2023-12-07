@@ -30,7 +30,7 @@ app.use(morgan('dev'));
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(path.resolve(__dirname, "./public")));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -49,9 +49,8 @@ app.get("/api/v1/test", (req, res) => {
 });  
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./public", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 });
-
 
 app.use('*',(req,res)=>{
     res.status(404).json({msg:'Not Found'}); 
